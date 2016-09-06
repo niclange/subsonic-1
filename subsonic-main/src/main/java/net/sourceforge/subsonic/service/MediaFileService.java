@@ -38,7 +38,7 @@ import org.apache.commons.lang.StringUtils;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.dao.AlbumDao;
+import net.sourceforge.subsonic.dao.AlbumDaoInterface;
 import net.sourceforge.subsonic.dao.MediaFileDao;
 import net.sourceforge.subsonic.domain.Album;
 import net.sourceforge.subsonic.domain.Genre;
@@ -66,7 +66,7 @@ public class MediaFileService {
     private SecurityService securityService;
     private SettingsService settingsService;
     private MediaFileDao mediaFileDao;
-    private AlbumDao albumDao;
+    private AlbumDaoInterface albumDao;
     private MetaDataParserFactory metaDataParserFactory;
     private boolean memoryCacheEnabled = true;
 
@@ -706,7 +706,7 @@ public class MediaFileService {
         mediaFileMemoryCache.removeAll();
     }
 
-    public void setAlbumDao(AlbumDao albumDao) {
+    public void setAlbumDao(AlbumDaoInterface albumDao) {
         this.albumDao = albumDao;
     }
 }

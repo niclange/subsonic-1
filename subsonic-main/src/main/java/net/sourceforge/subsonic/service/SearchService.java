@@ -64,7 +64,7 @@ import org.apache.lucene.util.Version;
 import com.google.common.collect.Lists;
 
 import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.dao.AlbumDao;
+import net.sourceforge.subsonic.dao.AlbumDaoInterface;
 import net.sourceforge.subsonic.dao.ArtistDao;
 import net.sourceforge.subsonic.domain.Album;
 import net.sourceforge.subsonic.domain.Artist;
@@ -103,7 +103,7 @@ public class SearchService {
 
     private MediaFileService mediaFileService;
     private ArtistDao artistDao;
-    private AlbumDao albumDao;
+    private AlbumDaoInterface albumDao;
 
     private IndexWriter artistWriter;
     private IndexWriter artistId3Writer;
@@ -441,7 +441,7 @@ public class SearchService {
         this.artistDao = artistDao;
     }
 
-    public void setAlbumDao(AlbumDao albumDao) {
+    public void setAlbumDao(AlbumDaoInterface albumDao) {
         this.albumDao = albumDao;
     }
 

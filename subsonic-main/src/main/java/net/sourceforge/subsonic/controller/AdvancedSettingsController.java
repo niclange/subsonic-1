@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Sindre Mehus
  */
-public class AdvancedSettingsController extends SimpleFormController {
+public class AdvancedSettingsController extends SimpleControllerHandlerAdapter {
 
     private SettingsService settingsService;
 

@@ -40,31 +40,26 @@ import net.sourceforge.subsonic.util.FileUtil;
  *
  * @author Sindre Mehus
  */
-public class AlbumDao extends AbstractDao {
+public class AlbumDao extends AbstractDao implements AlbumDaoInterface {
 
     private static final String COLUMNS = "id, path, name, artist, song_count, duration_seconds, cover_art_path, " +
                                           "year, genre, play_count, last_played, comment, created, last_scanned, present, folder_id";
 
     private final RowMapper rowMapper = new AlbumMapper();
 
-    /**
-     * Returns the album with the given artist and album name.
-     *
-     * @param artistName The artist name.
-     * @param albumName  The album name.
-     * @return The album or null.
-     */
-    public Album getAlbum(String artistName, String albumName) {
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#getAlbum(java.lang.String, java.lang.String)
+	 */
+    @Override
+	public Album getAlbum(String artistName, String albumName) {
         return queryOne("select " + COLUMNS + " from album where artist=? and name=?", rowMapper, artistName, albumName);
     }
 
-    /**
-     * Returns the album that the given file (most likely) is part of.
-     *
-     * @param file The media file.
-     * @return The album or null.
-     */
-    public Album getAlbumForFile(MediaFile file) {
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#getAlbumForFile(net.sourceforge.subsonic.domain.MediaFile)
+	 */
+    @Override
+	public Album getAlbumForFile(MediaFile file) {
 
         // First, get all albums with the correct album name (irrespective of artist).
         List<Album> candidates = query("select " + COLUMNS + " from album where name=?", rowMapper, file.getAlbumName());
@@ -90,11 +85,19 @@ public class AlbumDao extends AbstractDao {
         return null;
     }
 
-    public Album getAlbum(int id) {
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#getAlbum(int)
+	 */
+    @Override
+	public Album getAlbum(int id) {
         return queryOne("select " + COLUMNS + " from album where id=?", rowMapper, id);
     }
 
-    public List<Album> getAlbumsForArtist(final String artist, final List<MusicFolder> musicFolders) {
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#getAlbumsForArtist(java.lang.String, java.util.List)
+	 */
+    @Override
+	public List<Album> getAlbumsForArtist(final String artist, final List<MusicFolder> musicFolders) {
         if (musicFolders.isEmpty()) {
             return Collections.emptyList();
         }
@@ -107,12 +110,11 @@ public class AlbumDao extends AbstractDao {
                           rowMapper, args);
     }
 
-    /**
-     * Creates or updates an album.
-     *
-     * @param album The album to create/update.
-     */
-    public synchronized void createOrUpdateAlbum(Album album) {
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#createOrUpdateAlbum(net.sourceforge.subsonic.domain.Album)
+	 */
+    @Override
+	public synchronized void createOrUpdateAlbum(Album album) {
         String sql = "update album set " +
                      "path=?," +
                      "song_count=?," +
@@ -145,16 +147,11 @@ public class AlbumDao extends AbstractDao {
         album.setId(id);
     }
 
-    /**
-     * Returns albums in alphabetical order.
-     *
-     * @param offset       Number of albums to skip.
-     * @param count        Maximum number of albums to return.
-     * @param byArtist     Whether to sort by artist name
-     * @param musicFolders Only return albums from these folders.
-     * @return Albums in alphabetical order.
-     */
-    public List<Album> getAlphabetialAlbums(final int offset, final int count, boolean byArtist, final List<MusicFolder> musicFolders) {
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#getAlphabetialAlbums(int, int, boolean, java.util.List)
+	 */
+    @Override
+	public List<Album> getAlphabetialAlbums(final int offset, final int count, boolean byArtist, final List<MusicFolder> musicFolders) {
         if (musicFolders.isEmpty()) {
             return Collections.emptyList();
         }
@@ -168,15 +165,11 @@ public class AlbumDao extends AbstractDao {
                           "order by " + orderBy + " limit :count offset :offset", rowMapper, args);
     }
 
-    /**
-     * Returns the most frequently played albums.
-     *
-     * @param offset       Number of albums to skip.
-     * @param count        Maximum number of albums to return.
-     * @param musicFolders Only return albums from these folders.
-     * @return The most frequently played albums.
-     */
-    public List<Album> getMostFrequentlyPlayedAlbums(final int offset, final int count, final List<MusicFolder> musicFolders) {
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#getMostFrequentlyPlayedAlbums(int, int, java.util.List)
+	 */
+    @Override
+	public List<Album> getMostFrequentlyPlayedAlbums(final int offset, final int count, final List<MusicFolder> musicFolders) {
         if (musicFolders.isEmpty()) {
             return Collections.emptyList();
         }
@@ -189,15 +182,11 @@ public class AlbumDao extends AbstractDao {
                           "order by play_count desc limit :count offset :offset", rowMapper, args);
     }
 
-    /**
-     * Returns the most recently played albums.
-     *
-     * @param offset       Number of albums to skip.
-     * @param count        Maximum number of albums to return.
-     * @param musicFolders Only return albums from these folders.
-     * @return The most recently played albums.
-     */
-    public List<Album> getMostRecentlyPlayedAlbums(final int offset, final int count, final List<MusicFolder> musicFolders) {
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#getMostRecentlyPlayedAlbums(int, int, java.util.List)
+	 */
+    @Override
+	public List<Album> getMostRecentlyPlayedAlbums(final int offset, final int count, final List<MusicFolder> musicFolders) {
         if (musicFolders.isEmpty()) {
             return Collections.emptyList();
         }
@@ -210,15 +199,11 @@ public class AlbumDao extends AbstractDao {
                           "order by last_played desc limit :count offset :offset", rowMapper, args);
     }
 
-    /**
-     * Returns the most recently added albums.
-     *
-     * @param offset       Number of albums to skip.
-     * @param count        Maximum number of albums to return.
-     * @param musicFolders Only return albums from these folders.
-     * @return The most recently added albums.
-     */
-    public List<Album> getNewestAlbums(final int offset, final int count, final List<MusicFolder> musicFolders) {
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#getNewestAlbums(int, int, java.util.List)
+	 */
+    @Override
+	public List<Album> getNewestAlbums(final int offset, final int count, final List<MusicFolder> musicFolders) {
         if (musicFolders.isEmpty()) {
             return Collections.emptyList();
         }
@@ -231,16 +216,11 @@ public class AlbumDao extends AbstractDao {
                           "order by created desc limit :count offset :offset", rowMapper, args);
     }
 
-    /**
-     * Returns the most recently starred albums.
-     *
-     * @param offset       Number of albums to skip.
-     * @param count        Maximum number of albums to return.
-     * @param username     Returns albums starred by this user.
-     * @param musicFolders Only return albums from these folders.
-     * @return The most recently starred albums for this user.
-     */
-    public List<Album> getStarredAlbums(final int offset, final int count, final String username, final List<MusicFolder> musicFolders) {
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#getStarredAlbums(int, int, java.lang.String, java.util.List)
+	 */
+    @Override
+	public List<Album> getStarredAlbums(final int offset, final int count, final String username, final List<MusicFolder> musicFolders) {
         if (musicFolders.isEmpty()) {
             return Collections.emptyList();
         }
@@ -256,16 +236,11 @@ public class AlbumDao extends AbstractDao {
                           rowMapper, args);
     }
 
-    /**
-     * Returns albums in a genre.
-     *
-     * @param offset       Number of albums to skip.
-     * @param count        Maximum number of albums to return.
-     * @param genre        The genre name.
-     * @param musicFolders Only return albums from these folders.
-     * @return Albums in the genre.
-     */
-    public List<Album> getAlbumsByGenre(final int offset, final int count, final String genre, final List<MusicFolder> musicFolders) {
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#getAlbumsByGenre(int, int, java.lang.String, java.util.List)
+	 */
+    @Override
+	public List<Album> getAlbumsByGenre(final int offset, final int count, final String genre, final List<MusicFolder> musicFolders) {
         if (musicFolders.isEmpty()) {
             return Collections.emptyList();
         }
@@ -279,17 +254,11 @@ public class AlbumDao extends AbstractDao {
                           "and genre = :genre limit :count offset :offset", rowMapper, args);
     }
 
-    /**
-     * Returns albums within a year range.
-     *
-     * @param offset       Number of albums to skip.
-     * @param count        Maximum number of albums to return.
-     * @param fromYear     The first year in the range.
-     * @param toYear       The last year in the range.
-     * @param musicFolders Only return albums from these folders.
-     * @return Albums in the year range.
-     */
-    public List<Album> getAlbumsByYear(final int offset, final int count, final int fromYear, final int toYear,
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#getAlbumsByYear(int, int, int, int, java.util.List)
+	 */
+    @Override
+	public List<Album> getAlbumsByYear(final int offset, final int count, final int fromYear, final int toYear,
                                        final List<MusicFolder> musicFolders) {
         if (musicFolders.isEmpty()) {
             return Collections.emptyList();
@@ -312,7 +281,11 @@ public class AlbumDao extends AbstractDao {
         }
     }
 
-    public void markNonPresent(Date lastScanned) {
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#markNonPresent(java.util.Date)
+	 */
+    @Override
+	public void markNonPresent(Date lastScanned) {
         int minId = queryForInt("select top 1 id from album where last_scanned != ? and present", 0, lastScanned);
         int maxId = queryForInt("select max(id) from album where last_scanned != ? and present", 0, lastScanned);
 
@@ -322,7 +295,11 @@ public class AlbumDao extends AbstractDao {
         }
     }
 
-    public void expunge() {
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#expunge()
+	 */
+    @Override
+	public void expunge() {
         int minId = queryForInt("select top 1 id from album where not present", 0);
         int maxId = queryForInt("select max(id) from album where not present", 0);
 
@@ -332,16 +309,28 @@ public class AlbumDao extends AbstractDao {
         }
     }
 
-    public void starAlbum(int albumId, String username) {
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#starAlbum(int, java.lang.String)
+	 */
+    @Override
+	public void starAlbum(int albumId, String username) {
         unstarAlbum(albumId, username);
         update("insert into starred_album(album_id, username, created) values (?,?,?)", albumId, username, new Date());
     }
 
-    public void unstarAlbum(int albumId, String username) {
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#unstarAlbum(int, java.lang.String)
+	 */
+    @Override
+	public void unstarAlbum(int albumId, String username) {
         update("delete from starred_album where album_id=? and username=?", albumId, username);
     }
 
-    public Date getAlbumStarredDate(int albumId, String username) {
+    /* (non-Javadoc)
+	 * @see net.sourceforge.subsonic.dao.AlbumDaoInterface#getAlbumStarredDate(int, java.lang.String)
+	 */
+    @Override
+	public Date getAlbumStarredDate(int albumId, String username) {
         return queryForDate("select created from starred_album where album_id=? and username=?", null, albumId, username);
     }
 

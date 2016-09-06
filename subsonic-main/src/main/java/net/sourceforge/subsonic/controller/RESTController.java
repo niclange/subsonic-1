@@ -89,7 +89,7 @@ import net.sourceforge.subsonic.ajax.LyricsInfo;
 import net.sourceforge.subsonic.ajax.LyricsService;
 import net.sourceforge.subsonic.ajax.PlayQueueService;
 import net.sourceforge.subsonic.command.UserSettingsCommand;
-import net.sourceforge.subsonic.dao.AlbumDao;
+import net.sourceforge.subsonic.dao.AlbumDaoInterface;
 import net.sourceforge.subsonic.dao.ArtistDao;
 import net.sourceforge.subsonic.dao.BookmarkDao;
 import net.sourceforge.subsonic.dao.MediaFileDao;
@@ -182,7 +182,7 @@ public class RESTController extends MultiActionController {
     private SearchService searchService;
     private MediaFileDao mediaFileDao;
     private ArtistDao artistDao;
-    private AlbumDao albumDao;
+    private AlbumDaoInterface albumDao;
     private BookmarkDao bookmarkDao;
     private PlayQueueDao playQueueDao;
 
@@ -2456,7 +2456,7 @@ public class RESTController extends MultiActionController {
         this.artistDao = artistDao;
     }
 
-    public void setAlbumDao(AlbumDao albumDao) {
+    public void setAlbumDao(AlbumDaoInterface albumDao) {
         this.albumDao = albumDao;
     }
 

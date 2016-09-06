@@ -50,7 +50,7 @@ import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.mvc.LastModified;
 
 import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.dao.AlbumDao;
+import net.sourceforge.subsonic.dao.AlbumDaoInterface;
 import net.sourceforge.subsonic.dao.ArtistDao;
 import net.sourceforge.subsonic.domain.Album;
 import net.sourceforge.subsonic.domain.Artist;
@@ -88,7 +88,7 @@ public class CoverArtController implements Controller, LastModified {
     private PlaylistService playlistService;
     private PodcastService podcastService;
     private ArtistDao artistDao;
-    private AlbumDao albumDao;
+    private AlbumDaoInterface albumDao;
     private Semaphore semaphore;
 
     public void init() {
@@ -348,7 +348,7 @@ public class CoverArtController implements Controller, LastModified {
         this.artistDao = artistDao;
     }
 
-    public void setAlbumDao(AlbumDao albumDao) {
+    public void setAlbumDao(AlbumDaoInterface albumDao) {
         this.albumDao = albumDao;
     }
 

@@ -19,7 +19,7 @@
 package net.sourceforge.subsonic.controller;
 
 import net.sourceforge.subsonic.command.MusicFolderSettingsCommand;
-import net.sourceforge.subsonic.dao.AlbumDao;
+import net.sourceforge.subsonic.dao.AlbumDaoInterface;
 import net.sourceforge.subsonic.dao.ArtistDao;
 import net.sourceforge.subsonic.dao.MediaFileDao;
 import net.sourceforge.subsonic.domain.MusicFolder;
@@ -44,7 +44,7 @@ public class MusicFolderSettingsController extends SimpleFormController {
     private SettingsService settingsService;
     private MediaScannerService mediaScannerService;
     private ArtistDao artistDao;
-    private AlbumDao albumDao;
+    private AlbumDaoInterface albumDao;
     private MediaFileDao mediaFileDao;
 
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
@@ -125,7 +125,7 @@ public class MusicFolderSettingsController extends SimpleFormController {
         this.artistDao = artistDao;
     }
 
-    public void setAlbumDao(AlbumDao albumDao) {
+    public void setAlbumDao(AlbumDaoInterface albumDao) {
         this.albumDao = albumDao;
     }
 

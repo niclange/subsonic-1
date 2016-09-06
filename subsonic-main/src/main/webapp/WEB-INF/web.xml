@@ -9,6 +9,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
+          	/WEB-INF/datasource-config.xml
             /WEB-INF/applicationContext-service.xml
             /WEB-INF/applicationContext-security.xml
             /WEB-INF/applicationContext-cache.xml

@@ -19,13 +19,23 @@
 package net.sourceforge.subsonic.domain;
 
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.*;
+
+import lombok.Data;
+
 
 /**
  * @author Sindre Mehus
  * @version $Id$
  */
+@Entity
+@Data
 public class Album {
 
+	@Id
+	@GeneratedValue
     private int id;
     private String path;
     private String name;
@@ -42,7 +52,11 @@ public class Album {
     private Date lastScanned;
     private boolean present;
     private Integer folderId;
-
+    
+    @OneToMany
+    @JoinColumn(name="albumId", referencedColumnName="id")
+    private List<StarredAlbum> starredAlbums;
+    
     public Album() {
     }
 
@@ -67,131 +81,5 @@ public class Album {
         this.present = present;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getArtist() {
-        return artist;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
-
-    public int getSongCount() {
-        return songCount;
-    }
-
-    public void setSongCount(int songCount) {
-        this.songCount = songCount;
-    }
-
-    public int getDurationSeconds() {
-        return durationSeconds;
-    }
-
-    public void setDurationSeconds(int durationSeconds) {
-        this.durationSeconds = durationSeconds;
-    }
-
-    public String getCoverArtPath() {
-        return coverArtPath;
-    }
-
-    public void setCoverArtPath(String coverArtPath) {
-        this.coverArtPath = coverArtPath;
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public int getPlayCount() {
-        return playCount;
-    }
-
-    public void setPlayCount(int playCount) {
-        this.playCount = playCount;
-    }
-
-    public Date getLastPlayed() {
-        return lastPlayed;
-    }
-
-    public void setLastPlayed(Date lastPlayed) {
-        this.lastPlayed = lastPlayed;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Date getLastScanned() {
-        return lastScanned;
-    }
-
-    public void setLastScanned(Date lastScanned) {
-        this.lastScanned = lastScanned;
-    }
-
-    public boolean isPresent() {
-        return present;
-    }
-
-    public void setPresent(boolean present) {
-        this.present = present;
-    }
-
-    public void setFolderId(Integer folderId) {
-        this.folderId = folderId;
-    }
-
-    public Integer getFolderId() {
-        return folderId;
-    }
+   
 }

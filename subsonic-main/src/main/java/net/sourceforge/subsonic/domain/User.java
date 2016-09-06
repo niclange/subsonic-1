@@ -18,16 +18,24 @@
  */
 package net.sourceforge.subsonic.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import lombok.Data;
+
 /**
  * Represent a user.
  *
  * @author Sindre Mehus
  */
+@Entity
+@Data
 public class User {
 
     public static final String USERNAME_ADMIN = "admin";
     public static final String USERNAME_GUEST = "guest";
 
+    @Id
     private final String username;
     private String password;
     private String email;
@@ -63,145 +71,7 @@ public class User {
         this(username, password, email, false, 0, 0, 0);
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public boolean isLdapAuthenticated() {
-        return ldapAuthenticated;
-    }
-
-    public void setLdapAuthenticated(boolean ldapAuthenticated) {
-        this.ldapAuthenticated = ldapAuthenticated;
-    }
-
-    public long getBytesStreamed() {
-        return bytesStreamed;
-    }
-
-    public void setBytesStreamed(long bytesStreamed) {
-        this.bytesStreamed = bytesStreamed;
-    }
-
-    public long getBytesDownloaded() {
-        return bytesDownloaded;
-    }
-
-    public void setBytesDownloaded(long bytesDownloaded) {
-        this.bytesDownloaded = bytesDownloaded;
-    }
-
-    public long getBytesUploaded() {
-        return bytesUploaded;
-    }
-
-    public void setBytesUploaded(long bytesUploaded) {
-        this.bytesUploaded = bytesUploaded;
-    }
-
-    public boolean isAdminRole() {
-        return isAdminRole;
-    }
-
-    public void setAdminRole(boolean isAdminRole) {
-        this.isAdminRole = isAdminRole;
-    }
-
-    public boolean isSettingsRole() {
-        return isSettingsRole;
-    }
-
-    public void setSettingsRole(boolean isSettingsRole) {
-        this.isSettingsRole = isSettingsRole;
-    }
-
-    public boolean isCommentRole() {
-        return isCommentRole;
-    }
-
-    public void setCommentRole(boolean isCommentRole) {
-        this.isCommentRole = isCommentRole;
-    }
-
-    public boolean isDownloadRole() {
-        return isDownloadRole;
-    }
-
-    public void setDownloadRole(boolean isDownloadRole) {
-        this.isDownloadRole = isDownloadRole;
-    }
-
-    public boolean isUploadRole() {
-        return isUploadRole;
-    }
-
-    public void setUploadRole(boolean isUploadRole) {
-        this.isUploadRole = isUploadRole;
-    }
-
-    public boolean isPlaylistRole() {
-        return isPlaylistRole;
-    }
-
-    public void setPlaylistRole(boolean isPlaylistRole) {
-        this.isPlaylistRole = isPlaylistRole;
-    }
-
-    public boolean isCoverArtRole() {
-        return isCoverArtRole;
-    }
-
-    public void setCoverArtRole(boolean isCoverArtRole) {
-        this.isCoverArtRole = isCoverArtRole;
-    }
-
-    public boolean isPodcastRole() {
-        return isPodcastRole;
-    }
-
-    public void setPodcastRole(boolean isPodcastRole) {
-        this.isPodcastRole = isPodcastRole;
-    }
-
-    public boolean isStreamRole() {
-        return isStreamRole;
-    }
-
-    public void setStreamRole(boolean streamRole) {
-        isStreamRole = streamRole;
-    }
-
-    public boolean isJukeboxRole() {
-        return isJukeboxRole;
-    }
-
-    public void setJukeboxRole(boolean jukeboxRole) {
-        isJukeboxRole = jukeboxRole;
-    }
-
-    public boolean isShareRole() {
-        return isShareRole;
-    }
-
-    public void setShareRole(boolean shareRole) {
-        isShareRole = shareRole;
-    }
+   
 
     @Override
     public String toString() {

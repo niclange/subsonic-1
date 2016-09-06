@@ -29,7 +29,7 @@ import java.util.TimerTask;
 import org.apache.commons.lang.ObjectUtils;
 
 import net.sourceforge.subsonic.Logger;
-import net.sourceforge.subsonic.dao.AlbumDao;
+import net.sourceforge.subsonic.dao.AlbumDaoInterface;
 import net.sourceforge.subsonic.dao.ArtistDao;
 import net.sourceforge.subsonic.dao.MediaFileDao;
 import net.sourceforge.subsonic.domain.Album;
@@ -60,7 +60,7 @@ public class MediaScannerService {
     private MediaFileService mediaFileService;
     private MediaFileDao mediaFileDao;
     private ArtistDao artistDao;
-    private AlbumDao albumDao;
+    private AlbumDaoInterface albumDao;
     private int scanCount;
 
     public void init() {
@@ -415,7 +415,7 @@ public class MediaScannerService {
         this.artistDao = artistDao;
     }
 
-    public void setAlbumDao(AlbumDao albumDao) {
+    public void setAlbumDao(AlbumDaoInterface albumDao) {
         this.albumDao = albumDao;
     }
 
