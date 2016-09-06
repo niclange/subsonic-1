@@ -1,3 +1,6 @@
+#Clone Subsonic
+Try to upgrade version spring mvc and other, plus using JPA (hibernate) 
+
 # Subsonic
 Subsonic is a web-based media streamer, providing ubiquitous access to your music and video collection.
 
